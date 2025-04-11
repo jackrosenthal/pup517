@@ -5,16 +5,17 @@
 
 -----
 
-## Table of Contents
+pup517 is a PEP-517 backend for shipping non-Python tools as wheels in a venv.
+Imagine a Gentoo ebuild but in `pyproject.toml`.
 
-- [Installation](#installation)
-- [License](#license)
+Each tool is a Python package (that is, a directory with a `pyproject.toml`)
+which specifies how to build the tool.  In general, the tool uses a common build
+system (defined in `src/pup517/build_system`) instead of implementing it's own
+build actions as shell commands, but arbitrary shell commands are supported.
 
-## Installation
+This project is still experiemental, and the API is subject to change.
 
-```console
-pip install pup517
-```
+See examples inside `pups`.
 
 ## License
 
