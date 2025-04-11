@@ -4,7 +4,7 @@ build-backend = "pup517.backend"
 
 [project]
 name = "pup-unifdef"
-version = "2.12"
+version = "2.12.post1"
 
 [[pup517.srcuris]]
 type = "git"

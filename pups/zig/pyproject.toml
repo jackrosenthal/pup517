@@ -4,7 +4,7 @@ build-backend = "pup517.backend"
 
 [project]
 name = "pup-zig-bin"
-version = "0.14.0"
+version = "0.14.0.post1"
 
 [[pup517.srcuris]]
 type = "http_archive"

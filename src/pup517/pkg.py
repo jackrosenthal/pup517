@@ -137,7 +137,7 @@ class PkgBuilder:
             "Wheel-Version": "1.0",
             "Generator": "pup517",
             "Root-Is-Purelib": "false",
-            "Tag": "py3-none-linux_x86_64",
+            "Tag": "py3-none-manylinux1_x86_64",
         }
         (dist_info_dir / "WHEEL").write_text(serialize_wheel_metadata(wheel_metadata), encoding="utf-8")
         (dist_info_dir / "METADATA").write_text(serialize_wheel_metadata(self.pkg.metadata), encoding="utf-8")
@@ -152,7 +152,7 @@ class PkgBuilder:
         self.export_wheel_metadata()
 
     def export_wheel(self, wheel_dir: Path) -> Path:
-        output_file = wheel_dir / f"{self.pkg.distribution}-{self.pkg.version}-py3-none-linux_x86_64.whl"
+        output_file = wheel_dir / f"{self.pkg.distribution}-{self.pkg.version}-py3-none-manylinux1_x86_64.whl"
         with wheelfile.WheelFile(output_file, "w") as wheel:
             for path in self.install_dir.rglob("*"):
                 path = path.resolve(strict=True)
