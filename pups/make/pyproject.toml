@@ -8,8 +8,8 @@ version = "4.4.1"
 
 [[pup517.srcuris]]
 type = "http_archive"
-url = "https://mirrors.ocf.berkeley.edu/gnu/make/make-4.4.1.tar.lz"
-sha256 = "8814ba072182b605d156d7589c19a43b89fc58ea479b9355146160946f8cf6e9"
+url = "https://mirrors.ocf.berkeley.edu/gnu/make/make-4.4.1.tar.gz"
+sha256 = "dd16fb1d67bfab79a72f5e8390735c49e3e8e70b4945a15ab1f81ddb78658fb3"
 strip_components = 1
 
 [pup517.hooks]
