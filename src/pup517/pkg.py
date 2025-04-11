@@ -21,13 +21,13 @@ from wheel import wheelfile
 from pup517 import fetch
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Mapping
 
     from pup517.build_system import base
 
 
-def serialize_wheel_metadata(metadata: dict[str, str | list[str]]) -> str:
-    values = []
+def serialize_wheel_metadata(metadata: Mapping[str, str | list[str]]) -> str:
+    values: list[tuple[str, str]] = []
     for key, value in metadata.items():
         if isinstance(value, str):
             value = [value]

@@ -87,7 +87,7 @@ class HttpArchiveSrc(BaseSrc):
                 tar.extract(member, dest_path.parent)
 
 
-SRC_TYPES = {
+SRC_TYPES: dict[str, type[BaseSrc]] = {
     "git": GitSrc,
     "http_archive": HttpArchiveSrc,
 }
