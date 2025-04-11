@@ -37,6 +37,9 @@ class BuildSystem(base.BuildSystem):
         config = pyproject_config.get("pup517", {}).get("simple-cc", {})
         self.targets = [Target.model_validate(x) for x in config.get("targets", [])]
 
+    def get_requirements(self) -> list[str]:
+        return ["pup-zig-bin", *super().get_requirements()]
+
     def compile(self, srcdir: Path, workdir: Path) -> None:
         for target in self.targets:
             sources = [srcdir / x for x in target.srcs]
