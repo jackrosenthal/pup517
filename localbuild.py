@@ -108,6 +108,9 @@ async def main(
     for deps in pkg_deps.values():
         deps.intersection_update(pkg_dirs.keys())
 
+    # pypiserver requires the wheel dir to exist.
+    wheel_dir.mkdir(parents=True, exist_ok=True)
+
     if not port:
         port = random.randrange(10000, 65535)  # noqa: S311
 
