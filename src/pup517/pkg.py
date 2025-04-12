@@ -225,7 +225,7 @@ class Pkg:
         return result
 
     def export_sdist(self, sdist_dir: Path) -> Path:
-        base_dir_name = f"{self.name}-{self.version}"
+        base_dir_name = f"{self.distribution}-{self.version}"
         sdist_path = sdist_dir / f"{base_dir_name}.tar.gz"
         core_metadata = serialize_wheel_metadata(self.metadata).encode("utf-8")
 
