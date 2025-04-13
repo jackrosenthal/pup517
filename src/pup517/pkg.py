@@ -145,12 +145,12 @@ class PkgBuilder:
             launcher_path = self.bin_dir / launcher.name
             launcher_path.write_text(
                 "#!/bin/sh\n"
-                'if [ -z \"${VIRTUAL_ENV}\" ]; then\n'
+                'if [ -z "${VIRTUAL_ENV}" ]; then\n'
                 '  source "$(dirname "$0")/activate"\n'
                 "fi\n"
                 f'exec "{launcher.path.replace('"', r'\"')}" "$@"\n'
             )
-            os.chmod(launcher_path, 0o755)
+            os.chmod(launcher_path, 0o755)  # noqa: S103
 
     def export_wheel_metadata(self) -> None:
         dist_info_dir = self.install_dir / f"{self.pkg.distribution}-{self.pkg.version}.dist-info"
