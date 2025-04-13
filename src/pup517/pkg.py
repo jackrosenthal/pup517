@@ -46,9 +46,15 @@ class BuildSystemConfig(pydantic.BaseModel):
     backend: str = "pup517.build_system.base"
 
 
+class LauncherConfig(pydantic.BaseModel):
+    name: str
+    path: str
+
+
 class PupConfig(pydantic.BaseModel):
     build_system: BuildSystemConfig = pydantic.Field(default_factory=BuildSystemConfig, alias="build-system")
     hooks: Hooks = Hooks()
+    launchers: list[LauncherConfig] = pydantic.Field(default_factory=list)
 
 
 @dataclasses.dataclass
@@ -122,12 +128,29 @@ class PkgBuilder:
     def phase_install(self) -> None:
         """Install binaries."""
         self.bin_dir.mkdir(exist_ok=True, parents=True)
+        (self.data_dir / "data").mkdir(exist_ok=True, parents=True)
+
         with self._run_hooks(
             self.pkg.pup_config.hooks.install,
             cwd=self.src_dir,
-            extra_env={"PUP_BINDIR": str(self.bin_dir)},
+            extra_env={
+                "PUP_BINDIR": str(self.bin_dir),
+                "PUP_DATADIR": str(self.data_dir / "data"),
+            },
         ):
             self.pkg.build_system.install(self.src_dir, self.work_dir, self.bin_dir)
+
+        # Generate launchers.
+        for launcher in self.pkg.pup_config.launchers:
+            launcher_path = self.bin_dir / launcher.name
+            launcher_path.write_text(
+                "#!/bin/sh\n"
+                'if [ -z \"${VIRTUAL_ENV}\" ]; then\n'
+                '  source "$(dirname "$0")/activate"\n'
+                "fi\n"
+                f'exec "{launcher.path.replace('"', r'\"')}" "$@"\n'
+            )
+            os.chmod(launcher_path, 0o755)
 
     def export_wheel_metadata(self) -> None:
         dist_info_dir = self.install_dir / f"{self.pkg.distribution}-{self.pkg.version}.dist-info"

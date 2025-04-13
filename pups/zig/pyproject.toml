@@ -4,7 +4,7 @@ build-backend = "pup517.backend"
 
 [project]
 name = "pup-zig-bin"
-version = "0.14.0.post1"
+version = "0.14.0.post2"
 
 [[pup517.srcuris]]
 type = "http_archive"
@@ -16,6 +16,6 @@ strip_components = 1
 install = [
     "default",
     'cp zig "${PUP_BINDIR}/"',
-    'mkdir -p "${PUP_BINDIR}/../data/lib"',
-    'cp -r lib "${PUP_BINDIR}/../data/lib/zig"',
+    'mkdir -p "${PUP_DATADIR}/lib"',
+    'cp -r lib "${PUP_DATADIR}/lib/zig"',
 ]
