@@ -1,0 +1,26 @@
+[build-system]
+requires = ["pup517", "pup-go-bin"]
+build-backend = "pup517.backend"
+
+[project]
+name = "pup-go-jsonnet"
+version = "0.21.0"
+
+[[pup517.srcuris]]
+type = "git"
+repo = "https://github.com/google/go-jsonnet"
+commit = "67968688d9952f50662e979fab1bef889d0d3e57"
+
+[pup517.hooks]
+compile = [
+    "default",
+    'GOPATH="${PUP_WORKDIR}/gopath" go build -o "${PUP_WORKDIR}/jsonnet" ./cmd/jsonnet',
+    'GOPATH="${PUP_WORKDIR}/gopath" go build -o "${PUP_WORKDIR}/jsonnetfmt" ./cmd/jsonnetfmt',
+    'GOPATH="${PUP_WORKDIR}/gopath" go build -o "${PUP_WORKDIR}/jsonnet-lint" ./cmd/jsonnet-lint',
+]
+install = [
+    "default",
+    'cp "${PUP_WORKDIR}/jsonnet" "${PUP_BINDIR}/"',
+    'cp "${PUP_WORKDIR}/jsonnetfmt" "${PUP_BINDIR}/"',
+    'cp "${PUP_WORKDIR}/jsonnet-lint" "${PUP_BINDIR}/"',
+]
